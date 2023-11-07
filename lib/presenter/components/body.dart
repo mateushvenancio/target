@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:target/constants.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Body extends StatelessWidget {
   final Widget child;
@@ -27,7 +28,26 @@ class Body extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: 64,
           ),
-          child: child,
+          child: Stack(
+            children: [
+              child,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: GestureDetector(
+                  onTap: () {
+                    launchUrlString('https://www.google.com.br/');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(bottom: 16),
+                    child: Text(
+                      'Política de privacidade',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

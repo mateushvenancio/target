@@ -7,7 +7,6 @@ import 'package:target/presenter/components/main_button.dart';
 import 'package:target/presenter/components/main_text_field.dart';
 import 'package:target/repositories/i_auth_repository.dart';
 import 'package:target/services/show_alert_dialog.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -41,44 +40,25 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Body(
-        child: Stack(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MainTextField(
-                  label: 'Usuário',
-                  icon: const Icon(Icons.person),
-                  controller: usernameTextController,
-                ),
-                const SizedBox(height: 16),
-                MainTextField(
-                  label: 'Senha',
-                  icon: const Icon(Icons.lock),
-                  controller: passwordTextController,
-                  obscure: true,
-                ),
-                const SizedBox(height: 16),
-                MainButton(
-                  label: 'Entrar',
-                  onPressed: submit,
-                ),
-              ],
+            MainTextField(
+              label: 'Usuário',
+              icon: const Icon(Icons.person),
+              controller: usernameTextController,
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: GestureDetector(
-                onTap: () {
-                  launchUrlString('https://www.google.com.br/');
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: Text(
-                    'Política de privacidade',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
+            const SizedBox(height: 16),
+            MainTextField(
+              label: 'Senha',
+              icon: const Icon(Icons.lock),
+              controller: passwordTextController,
+              obscure: true,
+            ),
+            const SizedBox(height: 16),
+            MainButton(
+              label: 'Entrar',
+              onPressed: submit,
             ),
           ],
         ),

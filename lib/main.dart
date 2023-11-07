@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:target/datasources/mock_datasource/mock_auth_repository.dart';
+import 'package:target/presenter/screens/home_screen.dart';
 import 'package:target/presenter/screens/login_screen.dart';
+import 'package:target/presenter/stores/infos_store.dart';
 import 'package:target/repositories/i_auth_repository.dart';
 
 void main() {
-  GetIt.I.registerSingleton<IAuthRepository>(MockAuthRepository());
+  // registrar primeiro as dependências
+  GetIt.I.registerFactory<IAuthRepository>(() => MockAuthRepository());
+
+  // depois os stores
+  GetIt.I.registerSingleton(InfoStore());
+
   runApp(const MyApp());
 }
 
@@ -29,6 +36,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (_, __) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (_, __) => const HomeScreen(),
     ),
   ],
 );

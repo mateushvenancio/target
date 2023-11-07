@@ -3,15 +3,21 @@ import 'package:flutter/material.dart';
 class MainTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
+  final String? hint;
   final Widget? icon;
   final bool? obscure;
+  final Function(String value)? onSubmit;
+  final FocusNode? focusNode;
 
   const MainTextField({
     super.key,
     this.label,
+    this.hint,
     this.icon,
     this.obscure,
     this.controller,
+    this.onSubmit,
+    this.focusNode,
   });
 
   @override
@@ -31,13 +37,16 @@ class MainTextField extends StatelessWidget {
             ),
           ),
         TextField(
+          focusNode: focusNode,
           obscureText: obscure ?? false,
           controller: controller,
+          onSubmitted: onSubmit,
           decoration: InputDecoration(
             errorStyle: const TextStyle(color: Colors.white),
             fillColor: Colors.white,
             filled: true,
             prefixIconColor: Colors.black,
+            hintText: hint,
             contentPadding: EdgeInsets.symmetric(
               horizontal: icon == null ? 8 : 0,
             ),
