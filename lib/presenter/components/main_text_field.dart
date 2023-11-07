@@ -4,11 +4,13 @@ class MainTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
   final Widget? icon;
+  final bool? obscure;
 
   const MainTextField({
     super.key,
     this.label,
     this.icon,
+    this.obscure,
     this.controller,
   });
 
@@ -29,6 +31,7 @@ class MainTextField extends StatelessWidget {
             ),
           ),
         TextField(
+          obscureText: obscure ?? false,
           controller: controller,
           decoration: InputDecoration(
             errorStyle: const TextStyle(color: Colors.white),
