@@ -26,11 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     focusNode.addListener(() {
       focusNode.requestFocus();
     });
-    textController.addListener(() {
-      if (textController.text.isEmpty) {
-        infosStore.setEditingInfo(null);
-      }
-    });
     super.initState();
   }
 
@@ -50,10 +45,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Observer(builder: (_) {
               return Expanded(
                 child: _Card(
+                  selectedInfo: infosStore.editingInfo,
                   infos: infosStore.infos.toList(),
                   onEdit: (value) {
-                    textController.text = value.content;
-                    infosStore.setEditingInfo(value);
+                    if (infosStore.editingInfo == null) {
+                      textController.text = value.content;
+                      infosStore.setEditingInfo(value);
+                    } else {
+                      textController.clear();
+                      infosStore.setEditingInfo(null);
+                    }
                   },
                   onDelete: (value) {
                     showChoiceDialog(
@@ -91,11 +92,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class _Card extends StatelessWidget {
   final List<InfoEntity> infos;
+  final InfoEntity? selectedInfo;
   final Function(InfoEntity) onDelete;
   final Function(InfoEntity) onEdit;
 
   const _Card({
     required this.infos,
+    required this.selectedInfo,
     required this.onEdit,
     required this.onDelete,
   });
@@ -118,6 +121,7 @@ class _Card extends StatelessWidget {
                 itemBuilder: (_, index) {
                   return _CardItem(
                     infos[index],
+                    selected: selectedInfo?.id == infos[index].id,
                     onEdit: () => onEdit(infos[index]),
                     onDelete: () => onDelete(infos[index]),
                   );
@@ -133,11 +137,13 @@ class _CardItem extends StatelessWidget {
   final InfoEntity item;
   final Function() onEdit;
   final Function() onDelete;
+  final bool selected;
 
   const _CardItem(
     this.item, {
     required this.onEdit,
     required this.onDelete,
+    required this.selected,
   });
 
   @override
@@ -146,7 +152,11 @@ class _CardItem extends StatelessWidget {
       children: [
         const SizedBox(width: 12),
         Expanded(child: Text(item.content)),
-        IconButton(onPressed: onEdit, icon: const Icon(Icons.edit)),
+        IconButton(
+          onPressed: onEdit,
+          icon: const Icon(Icons.edit),
+          color: selected ? AppColors.green : Colors.black,
+        ),
         IconButton(onPressed: onDelete, icon: const Icon(Icons.delete_forever)),
       ],
     );

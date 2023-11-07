@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:target/datasources/local_datasource/local_info_repository.dart';
 import 'package:target/datasources/mock_datasource/mock_auth_repository.dart';
 import 'package:target/presenter/screens/home_screen.dart';
 import 'package:target/presenter/screens/login_screen.dart';
 import 'package:target/presenter/stores/infos_store.dart';
 import 'package:target/repositories/i_auth_repository.dart';
+import 'package:target/repositories/i_infos_repository.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // registrar primeiro as dependências
   GetIt.I.registerFactory<IAuthRepository>(() => MockAuthRepository());
+  GetIt.I.registerFactory<IInfosRepository>(() => LocalInfosRepository());
 
   // depois os stores
   GetIt.I.registerSingleton(InfoStore());

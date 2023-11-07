@@ -40,6 +40,14 @@ mixin _$InfoStore on _InfoStore, Store {
     });
   }
 
+  late final _$_initAsyncAction =
+      AsyncAction('_InfoStore._init', context: context);
+
+  @override
+  Future _init() {
+    return _$_initAsyncAction.run(() => super._init());
+  }
+
   late final _$_InfoStoreActionController =
       ActionController(name: '_InfoStore', context: context);
 
